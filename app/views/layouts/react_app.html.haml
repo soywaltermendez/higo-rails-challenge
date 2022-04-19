@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title HigoRailsStarter
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = javascript_pack_tag 'react_app'
+    = stylesheet_pack_tag 'react_app', media: 'all'
+  %body
+    #data{ data: { 'current-user': user_signed_in? ? current_user_json : 'null' } }
+    = yield
