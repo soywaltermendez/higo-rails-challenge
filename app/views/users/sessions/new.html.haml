@@ -1,0 +1,16 @@
+%div
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-signin" }) do |f|
+    %img.mb-4{:alt => "", :height => "72", :src => "https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg", :width => "72"}/
+    %h1.h3.mb-3.font-weight-normal Please sign in
+    = f.label :email, "Email address", class: "sr-only", for: "inputEmail"
+    = f.email_field :email, autofocus: true, autocomplete: "email", id: "inputEmail", placeholder: "Email address", class: "form-control"
+    = f.label :password, "Password", class: "sr-only"
+    = f.password_field :password, autocomplete: "current-password", id: "inputPassword", placeholder: "Password", class: "form-control"
+    - if devise_mapping.rememberable?
+      .field
+      .checkbox.mb-3
+        %label
+          = f.check_box :remember_me
+          = f.label :remember_me
+    = f.submit "Log in", class: "btn btn-lg btn-primary btn-block"
+    = render "users/shared/links"
