@@ -54,8 +54,9 @@ group :development, :test do
   gem 'rubocop-minitest'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 5.0'
   gem 'factory_bot_rails'
+  gem 'simplecov', '~> 0.21.2', require: false
 end
 
 gem "devise", "~> 4.8"
