@@ -22,5 +22,10 @@
       = link_to 'Sign out', destroy_user_session_path, class: "btn btn-outline-primary"
     - else
       = link_to 'Log in', new_user_session_path, class: "btn btn-outline-primary"
-
+  .container
+    - flash.each do |key, value|
+      = content_tag :div, class: "alert alert-#{key}" do
+        %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+        = value
   = yield

@@ -89,3 +89,20 @@ body {
         margin-right: auto !important;
     }
 }
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.table-container {
+    max-width: 100%;
+    overflow: scroll;
+}
+
+.table-scrolling {
+    overflow: hidden;
+}

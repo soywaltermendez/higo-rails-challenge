@@ -1,9 +1,10 @@
 .container
   = render "components/filters"
+  %hr.divider/
   .row
-    .col-sm-12.col-md-6
-      %h1.banner-title.vertical-align.p-0.m-0 Invoices
-    %hr.divider/
+    .col-sm-12.col-md-12
+      %h1.banner-title.vertical-align.p-0.m-0.float-left Invoices
+      = link_to "New Invoice", new_invoice_path, class: "btn btn-primary jumping float-right"
   - if @invoices.empty?
     .py-5
       %p.text-center.h5.leyend.mb-5
@@ -14,7 +15,7 @@
           = link_to "New Invoice", new_invoice_path, class: "btn btn-primary jumping"
   - else
     .table-container
-      %table.table.table-striped.tablesaw.tablesaw-stack{"data-tablesaw-mode" => "stack"}
+      %table.table.table-striped.table-scrolling
         %thead
           %tr
             %th UUID

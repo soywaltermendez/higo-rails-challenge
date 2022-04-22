@@ -2,10 +2,13 @@
 
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :destroy]
+  before_action :handle_filter, only: :show
 
   # GET /people/1
   def show
-    @invoice = Person.find(params[:id])
+    @filter_path = person_path(@person)
+    @invoices = @person.invoices_emitted.where(@filter).order(created_at: :desc)
+                       .paginate(page: params[:page], per_page: 10)
   end
 
   private
