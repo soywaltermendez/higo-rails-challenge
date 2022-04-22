@@ -57,6 +57,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0'
   gem 'factory_bot_rails'
   gem 'simplecov', '~> 0.21.2', require: false
+  gem "delayed_job_active_record", "~> 4.1"
+  gem 'daemons'
 end
 
 gem "devise", "~> 4.8"

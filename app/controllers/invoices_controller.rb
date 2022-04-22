@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'nokogiri'
+require './app/jobs/invoice_import_job/'
 
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :destroy]
@@ -12,27 +12,24 @@ class InvoicesController < ApplicationController
                        .paginate(page: params[:page], per_page: @per_page)
   end
 
-  # GET /invoices/1
   def show
     @invoice = Invoice.find(params[:id])
   end
 
-  # GET /invoices/new
   def new
     @invoice = Invoice.new
   end
 
-  # POST /invoices
   def create
+    files = Array.new
     params[:xmls].each do |xml|
-      ActiveRecord::Base.transaction do
         doc = Nokogiri::XML(xml.open)
         return StandardError if doc.errors.any?
-        handle_xml(xml)
-      end
+        files << Hash.from_xml(xml.open).with_indifferent_access
     end
 
-    redirect_to root_path, flash: { success: "Invoice created successfully." }
+    InvoiceImportJob.perform_later(files, current_user)
+    redirect_to root_path, flash: { success: "Invoice process created." }
   rescue Exception => e
     logger.error e
     @invoice = Invoice.new
@@ -40,7 +37,6 @@ class InvoicesController < ApplicationController
     render :new
   end
 
-  # DELETE /invoices/1
   def destroy
     @invoice.destroy
     redirect_to root_path, flash: { success: "Invoice deleted successfully." }
@@ -50,18 +46,5 @@ class InvoicesController < ApplicationController
 
   def set_invoice
     @invoice = Invoice.find(params[:id])
-  end
-
-  def handle_xml(xml)
-    hash = Hash.from_xml(xml.open).with_indifferent_access
-    xml_json = hash[:hash]
-    xml_json[:user] = current_user
-    xml_json[:emitter] = handle_person(xml_json[:emitter])
-    xml_json[:receiver] = handle_person(xml_json[:receiver])
-    Invoice.create(xml_json)
-  end
-
-  def handle_person(data)
-    Person.find_or_create_by(data)
   end
 end
