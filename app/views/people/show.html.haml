@@ -1,0 +1,19 @@
+.container
+  .row
+    .col-sm-12.col-md-6
+      %h1.banner-title.vertical-align.p-0.m-0 Person
+    .col-sm-12.col-md-6.flex-middle-right
+      %ol.breadcrumb
+        %li.breadcrumb-item= link_to "Invoices", root_path
+        %li.breadcrumb-item.active{"aria-current" => "page"} Person
+  %hr.divider/
+  .row
+    .form-group.col-sm-12.col-md-6
+      %strong Name:
+      = @person.name
+    .form-group.col-sm-12.col-md-6
+      %strong RFC:
+      = @person.rfc
+
+  .actions.py-3
+    = link_to "Regresar", root_path, class: "btn btn-secondary"

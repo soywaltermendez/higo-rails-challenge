@@ -2,10 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   # Comment out to use React
-  root to: 'pages#index'
-  %w[about].each do |page|
-    get page, to: 'pages#show'
-  end
+  root to: 'invoices#index'
 
   resources :invoices
   resources :people, only: :show

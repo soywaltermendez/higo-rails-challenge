@@ -4,6 +4,13 @@ require 'nokogiri'
 
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :destroy]
+  before_action :handle_filter, only: :index
+
+  def index
+    @invoices = Invoice.where(@filter).where(user: current_user)
+                       .order(created_at: :desc)
+                       .paginate(page: params[:page], per_page: 10)
+  end
 
   # GET /invoices/1
   def show
@@ -54,5 +61,21 @@ class InvoicesController < ApplicationController
 
   def set_invoice
     @invoice = Invoice.find(params[:id])
+  end
+
+  def handle_filter
+    @filter = String.new
+    min_amount_filter = "amount_cents >= #{params[:min_amount]}"
+    max_amount_filter = "amount_cents <= #{params[:max_amount]}"
+
+    if params[:min_amount].present? && params[:max_amount].present?
+      @filter += min_amount_filter
+      @filter += " AND "
+      @filter += max_amount_filter
+    elsif params[:min_amount].present?
+      @filter += min_amount_filter
+    elsif params[:max_amount].present?
+      @filter += max_amount_filter
+    end
   end
 end
