@@ -1,0 +1,42 @@
+.container
+  .row
+    .col-sm-12.col-md-6
+      %h1.banner-title.vertical-align.p-0.m-0 Invoices
+    %hr.divider/
+  - if @invoices.empty?
+    .py-5
+      %p.text-center.h5.leyend.mb-5
+        No invoice found
+        %br/
+        Start by generating a new invoice.
+        .text-center.mt-3
+          = link_to "New Invoice", new_invoice_path, class: "btn btn-primary jumping"
+  - else
+    .table-container
+      %table.table.table-striped.tablesaw.tablesaw-stack{"data-tablesaw-mode" => "stack"}
+        %thead
+          %tr
+            %th UUID
+            %th Amount
+            %th Emitter
+            %th Receiver
+            %th Emitted at
+            %th Expires at
+            %th{:colspan => "3"}
+        %tbody
+          - @invoices.each do |invoice|
+            %tr
+              %td= invoice.invoice_uuid
+              %td= number_to_currency(invoice.amount_cents) + " " + invoice.amount_currency
+              %td= link_to invoice.emitter.name, invoice.emitter, class: "dropdown-item"
+              %td= link_to invoice.receiver.name, invoice.receiver, class: "dropdown-item"
+              %td= invoice.emitted_at
+              %td= invoice.expires_at
+              %td.text-right
+                = link_to "See", invoice, class: "dropdown-item"
+                = link_to "Delete", invoice_path(invoice), class: "dropdown-item", method: :delete, data: { confirm: "¿Are you sure?" }
+
+    = will_paginate(@invoices, renderer: WillPaginate::ActionView::LinkRenderer, previous_label: "Anterior", next_label: "Siguiente")
+    .text-center.mt-3
+      .w-25.d-inline-block
+        Mostrando #{select_tag :per_page, options_for_select([5, 10, 20, 50, 100], @per_page), onchange: "if(this.value){window.location='?per_page='+this.value;}"} por página

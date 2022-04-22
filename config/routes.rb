@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     get page, to: 'pages#show'
   end
 
+  resources :invoices
+  resources :people, only: :show
+
   # Uncomment to use React
   # root to: 'react_app#index'
   # get '*path', to: 'react_app#index'

@@ -1,0 +1,45 @@
+.container
+  .row
+    .col-sm-12.col-md-6
+      %h1.banner-title.vertical-align.p-0.m-0 Invoices
+    .col-sm-12.col-md-6.flex-middle-right
+      %ol.breadcrumb
+        %li.breadcrumb-item= link_to "Invoices", root_path
+        %li.breadcrumb-item.active{"aria-current" => "page"} Invoice
+  %hr.divider/
+  .row
+    .form-group.col-sm-12.col-md-6
+      %strong UUID:
+      = @invoice.invoice_uuid
+    .form-group.col-sm-12.col-md-6
+      %strong Amount:
+      = number_to_currency(@invoice.amount_cents) + " " + @invoice.amount_currency
+    .form-group.col-sm-12.col-md-6
+      %strong Emitted Date:
+      = @invoice.emitted_at
+    .form-group.col-sm-12.col-md-6
+      %strong Expires Date:
+      = @invoice.expires_at
+
+  %hr.divider/
+  %h3 Emitter
+  .row
+    .form-group.col-sm-12.col-md-6
+      %strong Name:
+      = @invoice.emitter.name
+    .form-group.col-sm-12.col-md-6
+      %strong RFC:
+      = @invoice.emitter.rfc
+
+  %hr.divider/
+  %h3 Receiver
+  .row
+    .form-group.col-sm-12.col-md-6
+      %strong Name:
+      = @invoice.receiver.name
+    .form-group.col-sm-12.col-md-6
+      %strong RFC:
+      = @invoice.receiver.rfc
+
+  .actions.py-3
+    = link_to "Regresar", root_path, class: "btn btn-secondary"
