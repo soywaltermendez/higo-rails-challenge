@@ -25,28 +25,18 @@ class InvoicesController < ApplicationController
   # POST /invoices
   def create
     params[:xmls].each do |xml|
-      doc = Nokogiri::XML(xml.open)
-
-      return StandardError if doc.errors.any?
-
-      hash = Hash.from_xml(xml.open).with_indifferent_access
-      xml_json = hash[:hash]
-      xml_json[:user] = current_user
-
-      emitter = Person.find_or_create_by(xml_json[:emitter])
-      xml_json[:emitter] = emitter
-
-      receiver = Person.find_or_create_by(xml_json[:receiver])
-      xml_json[:receiver] = receiver
-
-      Invoice.create(xml_json)
+      ActiveRecord::Base.transaction do
+        doc = Nokogiri::XML(xml.open)
+        return StandardError if doc.errors.any?
+        handle_xml(xml)
+      end
     end
 
     redirect_to root_path, flash: { success: "Invoice created successfully." }
-  rescue Exception => exception
-    raise exception
+  rescue Exception => e
+    logger.error e
     @invoice = Invoice.new
-    flash[:error] = exception
+    flash[:error] = "We had an error, please try again."
     render :new
   end
 
@@ -60,5 +50,18 @@ class InvoicesController < ApplicationController
 
   def set_invoice
     @invoice = Invoice.find(params[:id])
+  end
+
+  def handle_xml(xml)
+    hash = Hash.from_xml(xml.open).with_indifferent_access
+    xml_json = hash[:hash]
+    xml_json[:user] = current_user
+    xml_json[:emitter] = handle_person(xml_json[:emitter])
+    xml_json[:receiver] = handle_person(xml_json[:receiver])
+    Invoice.create(xml_json)
+  end
+
+  def handle_person(data)
+    Person.find_or_create_by(data)
   end
 end
