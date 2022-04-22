@@ -59,6 +59,7 @@ group :development, :test do
   gem 'simplecov', '~> 0.21.2', require: false
   gem "delayed_job_active_record", "~> 4.1"
   gem 'daemons'
+  gem "faker"
 end
 
 gem "devise", "~> 4.8"
