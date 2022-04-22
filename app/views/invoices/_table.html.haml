@@ -21,7 +21,6 @@
             %th UUID
             %th Amount
             %th Emitter
-            %th Receiver
             %th Emitted at
             %th Expires at
             %th{:colspan => "3"}
@@ -31,7 +30,6 @@
               %td= invoice.invoice_uuid
               %td= number_to_currency(invoice.amount_cents) + " " + invoice.amount_currency
               %td= link_to invoice.emitter.name, invoice.emitter, class: "dropdown-item"
-              %td= link_to invoice.receiver.name, invoice.receiver, class: "dropdown-item"
               %td= invoice.emitted_at
               %td= invoice.expires_at
               %td.text-right
