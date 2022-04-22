@@ -7,8 +7,8 @@ class InvoicesController < ApplicationController
   before_action :handle_filter, only: :index
 
   def index
-    @invoices = Invoice.where(@filter).where(user: current_user)
-                       .order(created_at: :desc)
+    @filter_path = root_path
+    @invoices = Invoice.where(@filter).order(created_at: :desc)
                        .paginate(page: params[:page], per_page: 10)
   end
 
@@ -42,8 +42,7 @@ class InvoicesController < ApplicationController
       Invoice.create(xml_json)
     end
 
-    @invoices = Invoice.all.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
-    render "pages/index"
+    redirect_to root_path, flash: { success: "Invoice created successfully." }
   rescue Exception => exception
     raise exception
     @invoice = Invoice.new
@@ -61,21 +60,5 @@ class InvoicesController < ApplicationController
 
   def set_invoice
     @invoice = Invoice.find(params[:id])
-  end
-
-  def handle_filter
-    @filter = String.new
-    min_amount_filter = "amount_cents >= #{params[:min_amount]}"
-    max_amount_filter = "amount_cents <= #{params[:max_amount]}"
-
-    if params[:min_amount].present? && params[:max_amount].present?
-      @filter += min_amount_filter
-      @filter += " AND "
-      @filter += max_amount_filter
-    elsif params[:min_amount].present?
-      @filter += min_amount_filter
-    elsif params[:max_amount].present?
-      @filter += max_amount_filter
-    end
   end
 end
