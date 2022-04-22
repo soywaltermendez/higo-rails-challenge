@@ -38,5 +38,7 @@ module HigoRailsStarter
     config.assets.initialize_on_precompile = false
 
     config.active_job.queue_adapter = :delayed_job
+
+    config.i18n.default_locale = :en
   end
 end

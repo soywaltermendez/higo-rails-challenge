@@ -3,7 +3,8 @@
   %hr.divider/
   .row
     .col-sm-12.col-md-12
-      %h1.banner-title.vertical-align.p-0.m-0.float-left Invoices
+      %h1.banner-title.vertical-align.p-0.m-0.float-left
+        = I18n.t("model.invoice.plural")
       = link_to "New Invoice", new_invoice_path, class: "btn btn-primary jumping float-right"
   - if @invoices.empty?
     .py-5
