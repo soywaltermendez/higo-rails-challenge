@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_235310) do
+ActiveRecord::Schema.define(version: 2022_04_21_143613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,29 @@ ActiveRecord::Schema.define(version: 2021_07_12_235310) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "invoice_uuid"
+    t.bigint "emitter_id", null: false
+    t.bigint "receiver_id", null: false
+    t.decimal "amount_cents"
+    t.string "amount_currency"
+    t.date "emitted_at"
+    t.date "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["emitter_id"], name: "index_invoices_on_emitter_id"
+    t.index ["receiver_id"], name: "index_invoices_on_receiver_id"
+    t.index ["user_id"], name: "index_invoices_on_user_id"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "name"
+    t.string "rfc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -57,4 +80,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_235310) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "invoices", "people", column: "emitter_id"
+  add_foreign_key "invoices", "people", column: "receiver_id"
+  add_foreign_key "invoices", "users"
 end
