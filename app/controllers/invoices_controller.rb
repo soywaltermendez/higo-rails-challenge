@@ -3,6 +3,7 @@
 require 'nokogiri'
 
 class InvoicesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_invoice, only: [:show, :destroy]
   before_action :handle_filter, only: :index
 
