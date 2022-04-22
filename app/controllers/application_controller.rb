@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SetCurrentUser
   before_action :authenticate_user!
   before_action :set_paginate
 
