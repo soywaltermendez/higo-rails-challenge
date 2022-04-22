@@ -9,7 +9,7 @@ class InvoicesController < ApplicationController
   def index
     @filter_path = root_path
     @invoices = Invoice.where(@filter).order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 10)
+                       .paginate(page: params[:page], per_page: @per_page)
   end
 
   # GET /invoices/1

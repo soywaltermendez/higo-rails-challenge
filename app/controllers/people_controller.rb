@@ -9,7 +9,7 @@ class PeopleController < ApplicationController
     @filter_path = person_path(@person)
     @invoices = @person.invoices_emitted.where(@filter)
                        .order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 10)
+                       .paginate(page: params[:page], per_page: @per_page)
   end
 
   private
