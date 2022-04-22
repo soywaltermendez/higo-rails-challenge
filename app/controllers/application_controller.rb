@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :authenticate_user!
+
   def handle_filter
     @filter = String.new
     min_amount_filter = "amount_cents >= #{params[:min_amount]}"
