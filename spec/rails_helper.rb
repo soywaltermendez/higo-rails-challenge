@@ -4,6 +4,7 @@
 require 'spec_helper'
 require 'simplecov'
 require 'shared_context'
+require 'support/controller_helpers'
 ENV['RAILS_ENV'] ||= 'test'
 
 SimpleCov.minimum_coverage(100)
@@ -70,4 +71,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include ControllerHelpers, :type => :controller
 end

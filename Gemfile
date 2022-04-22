@@ -60,6 +60,7 @@ group :development, :test do
   gem "delayed_job_active_record", "~> 4.1"
   gem 'daemons'
   gem "faker"
+  gem "rails-controller-testing"
 end
 
 gem "devise", "~> 4.8"
