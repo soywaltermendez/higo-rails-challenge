@@ -14,6 +14,8 @@
  *= require_self
  */
 
+@import './pagination';
+
 html,
 body {
     height: 100%;
@@ -80,4 +82,10 @@ body {
     -webkit-clip-path: inset(50%);
     clip-path: inset(50%);
     border: 0;
+}
+
+@media (min-width: 768px) {
+    .mr-md-auto {
+        margin-right: auto !important;
+    }
 }
