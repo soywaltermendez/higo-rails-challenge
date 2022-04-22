@@ -1,6 +1,6 @@
 %div
   = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-login" }) do |f|
-    %img.mb-4{:alt => "", :height => "72", :src => "https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg", :width => "72"}/
+    = image_tag "higo.png", height: 72, class: "72"
     %h1.h3.mb-3.font-weight-normal Please log in
     = f.label :email, "Email address", class: "sr-only", for: "inputEmail"
     = f.email_field :email, autofocus: true, autocomplete: "email", id: "inputEmail", placeholder: "Email address", class: "form-control"
