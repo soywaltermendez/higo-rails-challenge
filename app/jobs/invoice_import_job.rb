@@ -25,7 +25,7 @@ class InvoiceImportJob < ApplicationJob
     xml_json[:user] = current_user
     xml_json[:emitter] = handle_person(xml_json[:emitter])
     xml_json[:receiver] = handle_person(xml_json[:receiver])
-    Invoice.create!(xml_json) if Invoice.find_by_invoice_uuid(xml_json[:invoice_uuid]).nil?
+    Invoice.create!(xml_json) if Invoice.find_by(invoice_uuid: xml_json[:invoice_uuid], user: current_user).nil?
   end
 
   def handle_person(data)
