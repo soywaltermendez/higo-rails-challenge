@@ -5,25 +5,30 @@
     .col-sm-12.col-md-12
       %h1.banner-title.vertical-align.p-0.m-0.float-left
         = I18n.t("model.invoice.plural")
-      = link_to "New Invoice", new_invoice_path, class: "btn btn-primary jumping float-right"
+      = link_to I18n.t("views.invoices.new"), new_invoice_path, class: "btn btn-primary jumping float-right"
   - if @invoices.empty?
     .py-5
       %p.text-center.h5.legend.mb-5
-        No invoice found
+        = I18n.t("views.invoices.not_fount")
         %br/
-        Start by generating a new invoice.
+        = I18n.t("views.invoices.start")
         .text-center.mt-3
-          = link_to "New Invoice", new_invoice_path, class: "btn btn-primary jumping"
+          = link_to I18n.t("views.invoices.new"), new_invoice_path, class: "btn btn-primary jumping"
   - else
     .table-container
       %table.table.table-striped.table-scrolling
         %thead
           %tr
-            %th UUID
-            %th Amount
-            %th Emitter
-            %th Emitted at
-            %th Expires at
+            %th
+              = I18n.t("views.invoices.uuid")
+            %th
+              = I18n.t("views.invoices.amount")
+            %th
+              = I18n.t("views.invoices.emitter")
+            %th
+              = I18n.t("views.invoices.emitted_at")
+            %th
+              = I18n.t("views.invoices.expires_at")
             %th{:colspan => "3"}
         %tbody
           - @invoices.each do |invoice|
@@ -34,10 +39,10 @@
               %td= invoice.emitted_at
               %td= invoice.expires_at
               %td.text-right
-                = link_to "See", invoice, class: "dropdown-item"
-                = link_to "Delete", invoice_path(invoice), class: "dropdown-item", method: :delete, data: { confirm: "¿Are you sure?" }
+                = link_to I18n.t("views.forms.see"), invoice, class: "dropdown-item"
+                = link_to I18n.t("views.forms.delete"), invoice_path(invoice), class: "dropdown-item", method: :delete, data: { confirm: "¿Are you sure?" }
 
     = will_paginate(@invoices, renderer: WillPaginate::ActionView::LinkRenderer, previous_label: "Anterior", next_label: "Siguiente")
     .text-center.mt-3
       .w-25.d-inline-block
-        Mostrando #{select_tag :per_page, options_for_select([5, 10, 20, 50, 100], @per_page), onchange: "if(this.value){window.location='?per_page='+this.value;}"} por página
+        Showing #{select_tag :per_page, options_for_select([5, 10, 20, 50, 100], @per_page), onchange: "if(this.value){window.location='?per_page='+this.value;}"} per page

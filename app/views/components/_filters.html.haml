@@ -1,16 +1,17 @@
 = form_tag(@filter_path, method: :get) do
   = hidden_field_tag :direction, params[:direction]
   = hidden_field_tag :sort, params[:sort]
-  %h3 Filter by amount
+  %h3
+    = I18n.t("views.filters.title")
   .row
     .col-md-6.col-lg-3.mb-3
-      = label_tag :min, "Min amount", class: "sr-only", for: "min_amount"
+      = label_tag :min, I18n.t("views.filters.min"), class: "sr-only", for: "min_amount"
       .input-group.mb-2
         .input-group-prepend
           .input-group-text $
         = text_field_tag :min_amount, params[:min_amount], class: "form-control", placeholder: "min", id: "min_amount"
     .col-md-6.col-lg-3.mb-3
-      = label_tag :min, "Max amount", class: "sr-only", for: "max_amount"
+      = label_tag :min, I18n.t("views.filters.max"), class: "sr-only", for: "max_amount"
       .input-group.mb-2
         .input-group-prepend
           .input-group-text $
@@ -18,4 +19,4 @@
     .col-md-6.col-lg-3.mb-3
       = button_tag(type: "submit", class: "btn btn-primary") do
         %i.fa.fa-search{"aria-hidden" => "true"}
-        Search
+        = I18n.t("views.filters.btn")
