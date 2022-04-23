@@ -18,5 +18,5 @@ Don't hesitate to install any alternatives that you prefer or any other dependen
 
 https://walter-challenge.herokuapp.com
 
-- Is important to sign up with a real email. 
+- Is important to sign up with a real email, but in the heroku app the mailers are disabled.
 - You can use the example.xml file to test the happy path.
