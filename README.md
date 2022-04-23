@@ -14,7 +14,8 @@ If you want to use React, take a look at the bottom of the `cofig/routes.rb` fil
 
 Don't hesitate to install any alternatives that you prefer or any other dependencies you deem necessary.
 
-## HEROKU
+## Heroku
 
 https://walter-challenge.herokuapp.com
+
 Is important to sign up with a real email.
