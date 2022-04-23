@@ -17,3 +17,4 @@ Don't hesitate to install any alternatives that you prefer or any other dependen
 ## HEROKU
 
 https://walter-challenge.herokuapp.com
+Is important to sign up with a real email.
