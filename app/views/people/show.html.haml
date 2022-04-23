@@ -8,6 +8,10 @@
     .form-group.col-sm-12.col-md-6
       %strong RFC:
       = @person.rfc
+    - @person.emitted_amount.each do |currency|
+      .form-group.col-sm-12.col-md-6
+        %strong Total amount emitted in #{currency[0]}:
+        = number_to_currency(currency[1])
 
   .actions.py-3
     = link_to "Regresar", root_path, class: "btn btn-secondary"

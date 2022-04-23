@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'nokogiri'
+require './app/jobs/invoice_import_job/'
 
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :destroy]
@@ -9,48 +9,34 @@ class InvoicesController < ApplicationController
   def index
     @filter_path = root_path
     @invoices = Invoice.where(@filter).order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 10)
+                       .paginate(page: params[:page], per_page: @per_page)
   end
 
-  # GET /invoices/1
   def show
     @invoice = Invoice.find(params[:id])
   end
 
-  # GET /invoices/new
   def new
     @invoice = Invoice.new
   end
 
-  # POST /invoices
   def create
+    files = Array.new
     params[:xmls].each do |xml|
-      doc = Nokogiri::XML(xml.open)
-
-      return StandardError if doc.errors.any?
-
-      hash = Hash.from_xml(xml.open).with_indifferent_access
-      xml_json = hash[:hash]
-      xml_json[:user] = current_user
-
-      emitter = Person.find_or_create_by(xml_json[:emitter])
-      xml_json[:emitter] = emitter
-
-      receiver = Person.find_or_create_by(xml_json[:receiver])
-      xml_json[:receiver] = receiver
-
-      Invoice.create(xml_json)
+        doc = Nokogiri::XML(xml.open)
+        return StandardError if doc.errors.any?
+        files << Hash.from_xml(xml.open).with_indifferent_access
     end
 
-    redirect_to root_path, flash: { success: "Invoice created successfully." }
-  rescue Exception => exception
-    raise exception
+    InvoiceImportJob.perform_later(files, current_user)
+    redirect_to root_path, flash: { success: "Invoice process created." }
+  rescue Exception => e
+    logger.error e
     @invoice = Invoice.new
-    flash[:error] = exception
+    flash[:error] = "We had an error, please try again."
     render :new
   end
 
-  # DELETE /invoices/1
   def destroy
     @invoice.destroy
     redirect_to root_path, flash: { success: "Invoice deleted successfully." }

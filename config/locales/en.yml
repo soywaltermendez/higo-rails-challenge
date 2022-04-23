@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+  model:
+    invoice:
+      plural: Invoices
+  invoice_mailer:
+    confirmation:
+      subject: Processed invoices
+      body: Your invoice upload process finished

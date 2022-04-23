@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SetCurrentUser
   before_action :authenticate_user!
+  before_action :set_paginate
 
   def handle_filter
     @filter = String.new
@@ -22,5 +24,11 @@ class ApplicationController < ActionController::Base
     end
 
     @filter += "user_id = #{current_user.id}"
+  end
+
+  private
+
+  def set_paginate
+    @per_page = params[:per_page].to_i < 1 ? 10 : params[:per_page] || 10
   end
 end

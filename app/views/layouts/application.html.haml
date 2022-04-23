@@ -3,11 +3,13 @@
   %head
     %meta{:charset => "utf-8"}/
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title HigoRailsStarter
+    %title HigoChallenge
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "", :name => "description"}/
     %meta{:content => "", :name => "author"}/
     %link{:href => "https://getbootstrap.com/docs/4.0/examples/pricing/", :rel => "canonical"}/
+    = favicon_link_tag "favicon.ico"
+
     / Custom styles for this template
     = csrf_meta_tags
     = csp_meta_tag
@@ -25,7 +27,5 @@
   .container
     - flash.each do |key, value|
       = content_tag :div, class: "alert alert-#{key}" do
-        %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"}
-          %span{"aria-hidden" => "true"} ×
         = value
   = yield
