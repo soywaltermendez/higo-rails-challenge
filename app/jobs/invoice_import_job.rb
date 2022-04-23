@@ -14,6 +14,7 @@ class InvoiceImportJob < ApplicationJob
 
     InvoiceMailer.confirmation(current_user.email).deliver
   rescue StandardError => e
+    InvoiceMailer.error(current_user.email).deliver
     logger.error e
     raise e
   end

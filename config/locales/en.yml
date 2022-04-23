@@ -38,3 +38,6 @@ en:
     confirmation:
       subject: Processed invoices
       body: Your invoice upload process finished
+    error:
+      subject: Upload invoices error
+      body: Please try later
