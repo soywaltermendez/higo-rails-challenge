@@ -8,6 +8,8 @@ RSpec.describe InvoicesController, type: :controller do
   before :each do
     @user=create(:user)
     sign_in @user
+    @file = fixture_file_upload('test.xml', 'text/xml')
+    ActiveJob::Base.queue_adapter = :test
   end
 
   describe 'GET #index' do
@@ -32,6 +34,22 @@ RSpec.describe InvoicesController, type: :controller do
       get :new, params: { use_route: 'invoices/new' }
       expect(response.status).to eq(200)
       expect(response).to render_template("new")
+    end
+  end
+
+  describe 'POST #create' do
+    it 'render new view with errors' do
+      post :create, params: { use_route: 'invoices/' }
+      expect(response.status).to eq(200)
+      expect(response).to render_template("new")
+    end
+
+    it 'create invoice upload job' do
+      array_of_files = Array.new
+      array_of_files << @file
+      post :create, params: { use_route: 'invoices/', xmls: array_of_files }
+      expect(InvoiceImportJob)
+        .to have_been_enqueued
     end
   end
 end
