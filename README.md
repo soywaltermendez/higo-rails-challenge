@@ -18,5 +18,5 @@ Don't hesitate to install any alternatives that you prefer or any other dependen
 
 https://walter-challenge.herokuapp.com
 
-- Is important to sign up with a real email, but in the heroku app the mailers are disabled. You can see the email example in this [Notion][https://familiar-secure-8f4.notion.site/Higo-challenge-f1061733e1214a2990a56f32b028b24b].
+- Is important to sign up with a real email, but in the heroku app the mailers are disabled. You can see the email example in this [Notion](https://familiar-secure-8f4.notion.site/Higo-challenge-f1061733e1214a2990a56f32b028b24b).
 - You can use the example.xml file to test the happy path.
