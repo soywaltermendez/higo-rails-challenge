@@ -15,7 +15,7 @@ class InvoiceImportJob < ApplicationJob
     InvoiceMailer.confirmation(current_user.email).deliver
   rescue StandardError => e
     logger.error e
-    raise "We had an error, please try again."
+    raise e
   end
 
   private
@@ -25,7 +25,7 @@ class InvoiceImportJob < ApplicationJob
     xml_json[:user] = current_user
     xml_json[:emitter] = handle_person(xml_json[:emitter])
     xml_json[:receiver] = handle_person(xml_json[:receiver])
-    Invoice.create(xml_json)
+    Invoice.create!(xml_json) if Invoice.find_by_invoice_uuid(xml_json[:invoice_uuid]).nil?
   end
 
   def handle_person(data)
