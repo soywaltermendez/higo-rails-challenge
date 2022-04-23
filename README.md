@@ -19,4 +19,4 @@ Don't hesitate to install any alternatives that you prefer or any other dependen
 https://walter-challenge.herokuapp.com
 
 - Is important to sign up with a real email. 
-- You can use the example.xml file for testing the happy path.
+- You can use the example.xml file to test the happy path.
