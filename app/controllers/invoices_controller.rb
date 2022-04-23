@@ -13,7 +13,8 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @invoice = Invoice.find(params[:id])
+    @invoice = Invoice.find_by(id: params[:id], user: current_user)
+    redirect_to root_path, error: "This invoice doesnt exist." if @invoice.nil?
   end
 
   def new
