@@ -23,7 +23,7 @@ describe InvoiceMailer  do
       it "renders the from email" do
         mail = described_class.confirmation(@email)
 
-        expect(mail.from).to eq ["from@example.com"]
+        expect(mail.from).to eq ["walter@higo.com"]
       end
     end
   end
