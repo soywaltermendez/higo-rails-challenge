@@ -3,7 +3,7 @@
   %head
     %meta{:charset => "utf-8"}/
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title HigoChallenge
+    %title Higo
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "", :name => "description"}/
     %meta{:content => "", :name => "author"}/
@@ -21,9 +21,9 @@
     %h5.my-0.mr-md-auto.font-weight-normal Higo
     %nav.my-2.my-md-0.mr-md-3
     - if user_signed_in?
-      = link_to 'Sign out', destroy_user_session_path, class: "btn btn-outline-primary"
+      = link_to I18n.t("device.sign_out"), destroy_user_session_path, class: "btn btn-outline-primary"
     - else
-      = link_to 'Log in', new_user_session_path, class: "btn btn-outline-primary"
+      = link_to I18n.t("device.log_in"), new_user_session_path, class: "btn btn-outline-primary"
   .container
     - flash.each do |key, value|
       = content_tag :div, class: "alert alert-#{key}" do

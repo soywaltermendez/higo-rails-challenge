@@ -28,7 +28,7 @@ class InvoicesController < ApplicationController
     end
 
     InvoiceImportJob.perform_later(files, current_user)
-    redirect_to root_path, flash: { success: "Invoice process created." }
+    redirect_to root_path, flash: { success: I18n.t("model.invoice.create") }
   rescue Exception => e
     logger.error e
     @invoice = Invoice.new
@@ -38,13 +38,13 @@ class InvoicesController < ApplicationController
 
   def destroy
     @invoice.destroy
-    redirect_to root_path, flash: { success: "Invoice deleted successfully." }
+    redirect_to root_path, flash: { success: I18n.t("model.invoice.destroy") }
   end
 
   private
 
   def set_invoice
     @invoice = Invoice.find_by(id: params[:id], user: current_user)
-    redirect_to root_path, error: "This invoice doesnt exist." if @invoice.nil?
+    redirect_to root_path, error: I18n.t("model.invoice.not_exist") if @invoice.nil?
   end
 end
